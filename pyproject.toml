@@ -20,7 +20,7 @@ dependencies = [
     # core runtime / reproducible pins
     "hydra-core>=1.2,<1.4",
     "robomimic==0.2.0",
-    "robosuite==1.4.0",
+    "robosuite>=1.5.2,<1.6",
     "bddl==1.0.1",
 
     # common libs
