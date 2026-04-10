@@ -11,6 +11,8 @@ class OnTheGroundPanda(ManipulatorModel):
         idn (int or str): Number or some other unique identification string for this robot instance
     """
 
+    arms = ["right"]  # required by robosuite >= 1.5.0
+
     def __init__(self, idn=0):
         super().__init__(xml_path_completion("robots/panda/robot.xml"), idn=idn)
 
@@ -24,8 +26,14 @@ class OnTheGroundPanda(ManipulatorModel):
         return None
 
     @property
+    def default_base(self):  # robosuite >= 1.5.0 renamed default_mount -> default_base
+        # None was valid in 1.4.0 for "no mount"; 1.5.2 requires "NullMount"
+        mount = self.default_mount
+        return "NullMount" if mount is None else mount
+
+    @property
     def default_gripper(self):
-        return "PandaGripper"
+        return {"right": "PandaGripper"}  # robosuite >= 1.5.0 expects dict keyed by arm
 
     @property
     def default_controller_config(self):
