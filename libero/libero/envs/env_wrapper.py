@@ -131,7 +131,10 @@ class ControlEnv:
         self.env.reset_from_xml_string(xml_string)
 
     def seed(self, seed):
-        self.env.seed(seed)
+        # robosuite 1.5.2 sets self.seed = seed in ManipulationEnv.__init__,
+        # shadowing BDDLBaseDomain.seed() via instance attribute lookup.
+        # Seed the RNG directly to match what BDDLBaseDomain.seed() does.
+        np.random.seed(seed)
 
     def set_init_state(self, init_state):
         return self.regenerate_obs_from_state(init_state)
