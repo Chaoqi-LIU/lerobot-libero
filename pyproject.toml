@@ -3,24 +3,27 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "libero"
+name = "praxis-libero"
 version = "0.1.1"
 description = "LIBERO: Benchmark and environments for robot learning"
 authors = [
     { name = "Jade Choghari", email = "jade.choghari@huggingface.co" },
 ]
-license = { text = "MIT" }
+maintainers = [
+    { name = "Chaoqi Liu", email = "liuchaoqi730@gmail.com" },
+]
+license = "MIT"
 readme = "README.md"
 requires-python = ">=3.9"
 
 dependencies = [
     # egl probe: canonical repo
-    "hf-egl-probe @ git+https://github.com/huggingface/egl_probe.git",
+    "hf-egl-probe>=1.0.2",
 
     # core runtime / reproducible pins
     "hydra-core>=1.2,<1.4",
     "robomimic==0.2.0",
-    "robosuite>=1.5.2,<1.6",
+    "praxis-robosuite>=1.5.2,<1.6",
     "bddl==1.0.1",
 
     # common libs
@@ -41,5 +44,13 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/huggingface/lerobot-libero"
-Issues = "https://github.com/huggingface/lerobot-libero/issues"
+Homepage = "https://github.com/Chaoqi-LIU/lerobot-libero"
+Repository = "https://github.com/Chaoqi-LIU/lerobot-libero"
+Issues = "https://github.com/Chaoqi-LIU/lerobot-libero/issues"
+"Maintainer Website" = "https://chaoqi-liu.com"
+
+[project.scripts]
+"lifelong.main" = "libero.lifelong.main:main"
+"lifelong.eval" = "libero.lifelong.evaluate:main"
+"libero.config_copy" = "scripts.config_copy:main"
+"libero.create_template" = "scripts.create_template:main"
