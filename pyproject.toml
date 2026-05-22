@@ -25,6 +25,7 @@ dependencies = [
     "robomimic==0.2.0",
     "praxis-robosuite>=1.5.2,<1.6",
     "bddl==1.0.1",
+    "huggingface_hub>=0.20.0",
 
     # common libs
     "numpy",

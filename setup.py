@@ -6,7 +6,6 @@ setup(
     package_data={
         "libero": [
             "libero/bddl_files/**/*",
-            "libero/assets/**/*",
             "libero/init_files/**/*",
         ]
     },

@@ -7,7 +7,6 @@ from tqdm import tqdm
 from termcolor import colored
 from pathlib import Path
 import zipfile
-import io
 import urllib.request
 import shutil
 
@@ -15,13 +14,10 @@ from libero.libero import get_libero_path
 
 try:
     from huggingface_hub import snapshot_download
-    import shutil
+
     HUGGINGFACE_AVAILABLE = True
 except ImportError:
     HUGGINGFACE_AVAILABLE = False
-
-import libero.libero.utils.download_utils as download_utils
-from libero.libero import get_libero_path
 
 
 class DownloadProgressBar(tqdm):
@@ -106,6 +102,47 @@ DATASET_LINKS = {
 }
 
 HF_REPO_ID = "yifengzhu-hf/LIBERO-datasets"
+HF_ASSETS_REPO_ID = "lerobot/libero-assets"
+
+
+def download_assets_from_huggingface(download_dir=None):
+    """Download LIBERO simulation assets from Hugging Face Hub."""
+
+    if not HUGGINGFACE_AVAILABLE:
+        raise ImportError(
+            "Hugging Face Hub is not available. Install it with "
+            "'pip install huggingface_hub'."
+        )
+
+    if download_dir is None:
+        download_dir = os.path.join(
+            os.path.expanduser("~"),
+            ".cache",
+            "libero",
+            "assets",
+        )
+
+    expected_files = (
+        "articulated_objects/microwave.xml",
+        "scenes/kitchen_background/kitchen_background.xml",
+        "stable_hope_objects/alphabet_soup/alphabet_soup.xml",
+        "stable_scanned_objects/akita_black_bowl/akita_black_bowl.xml",
+        "textures/ceramic.png",
+        "turbosquid_objects/black_book/black_book.xml",
+    )
+    if all(
+        os.path.exists(os.path.join(download_dir, relative_path))
+        for relative_path in expected_files
+    ):
+        return download_dir
+
+    os.makedirs(download_dir, exist_ok=True)
+    snapshot_download(
+        repo_id=HF_ASSETS_REPO_ID,
+        repo_type="dataset",
+        local_dir=download_dir,
+    )
+    return download_dir
 
 
 def download_from_huggingface(dataset_name, download_dir, check_overwrite=True):
@@ -146,8 +183,7 @@ def download_from_huggingface(dataset_name, download_dir, check_overwrite=True):
         repo_type="dataset",
         local_dir=download_dir,
         allow_patterns=f"{dataset_name}/*",
-        local_dir_use_symlinks=False,  # Prevents using symlinks to cached files
-        force_download=True  # Forces re-downloading files
+        force_download=True,
     )
     
     # Verify downloaded files

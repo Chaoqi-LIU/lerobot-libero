@@ -7,6 +7,8 @@ libero_config_path = os.environ.get(
 )
 config_file = os.path.join(libero_config_path, "config.yaml")
 
+_assets_path_cache = None
+
 
 def get_default_path_dict(custom_location=None):
     if custom_location is None:
@@ -61,6 +63,30 @@ def set_libero_default_path(custom_location=os.path.dirname(os.path.abspath(__fi
 
 if not os.path.exists(libero_config_path):
     os.makedirs(libero_config_path)
+
+
+def get_assets_path():
+    """Return the local LIBERO asset root, downloading it on first use if needed."""
+
+    global _assets_path_cache
+
+    if _assets_path_cache is not None and os.path.exists(_assets_path_cache):
+        return _assets_path_cache
+
+    local_assets_path = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)),
+        "assets",
+    )
+    if os.path.exists(local_assets_path):
+        _assets_path_cache = local_assets_path
+        return local_assets_path
+
+    from libero.libero.utils.download_utils import download_assets_from_huggingface
+
+    assets_path = download_assets_from_huggingface()
+    _assets_path_cache = assets_path
+    return assets_path
+
 
 if not os.path.exists(config_file):
     # Create a default config file
