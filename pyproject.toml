@@ -17,9 +17,6 @@ readme = "README.md"
 requires-python = ">=3.9"
 
 dependencies = [
-    # egl probe: canonical repo
-    "hf-egl-probe>=1.0.2",
-
     # core runtime / reproducible pins
     "hydra-core>=1.2,<1.4",
     "praxis-robomimic==0.5.0",
