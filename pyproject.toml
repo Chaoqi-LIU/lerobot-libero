@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "praxis-libero"
-version = "0.1.1"
+version = "0.1.1.post1"
 description = "LIBERO: Benchmark and environments for robot learning"
 authors = [
     { name = "Jade Choghari", email = "jade.choghari@huggingface.co" },
@@ -22,7 +22,7 @@ dependencies = [
 
     # core runtime / reproducible pins
     "hydra-core>=1.2,<1.4",
-    "robomimic==0.2.0",
+    "praxis-robomimic==0.5.0",
     "praxis-robosuite>=1.5.2,<1.6",
     "bddl==1.0.1",
     "huggingface_hub>=0.20.0",
@@ -54,4 +54,4 @@ Issues = "https://github.com/Chaoqi-LIU/lerobot-libero/issues"
 "lifelong.main" = "libero.lifelong.main:main"
 "lifelong.eval" = "libero.lifelong.evaluate:main"
 "libero.config_copy" = "scripts.config_copy:main"
-"libero.create_template" = "scripts.create_template:main"
+"libero.create_template" = "scripts.config_copy:main"
