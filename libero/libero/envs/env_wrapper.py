@@ -88,17 +88,12 @@ class ControlEnv:
         return self.env.step(action)
 
     def reset(self):
-        success = False
-        while not success:
+        # Object placement is sampled and can fail; retry only that. Any other error must propagate.
+        while True:
             try:
-                ret = self.env.reset()
-                success = True
+                return self.env.reset()
             except RandomizationError:
-                pass
-            finally:
                 continue
-
-        return ret
 
     def check_success(self):
         return self.env._check_success()
