@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "praxis-libero"
-version = "0.1.1.post1"
+version = "0.1.1.post2"
 description = "LIBERO: Benchmark and environments for robot learning"
 authors = [
     { name = "Jade Choghari", email = "jade.choghari@huggingface.co" },
